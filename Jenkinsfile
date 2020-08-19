@@ -25,25 +25,12 @@ pipeline {
           }
       }
       
-      stage('Deploy Application on K8s') {
-              steps
-              {
-                
-                sshagent(['prabhat_1121485']) {
-    // some block
-                       sh "scp -o StrictHostKeyChecking=no Node.yaml prabhat_1121485@13.93.120.161:/home/prabhat_1121485/"
-                      script{
-                        try{
-                            sh "prabhat_1121485@13.93.120.161 kubectl apply -f ."
-                        }catch(error){
-                            sh "prabhat_1121485@13.93.120.161 kubectl create -f ."
-                        }
-                    }
-}
-               
+stage("Deploy on AKS using cluster"){
+    	def kubeCMD = 'kubectl apply -f Node.yaml -n prabhat'
+    	sshagent(['prabhat_1121485']){
+    	sh 'ssh -o StrictHostKeyChecking=no prabhat_1121485@13.93.120.161 ${kubeCMD}'
+    	}
     }
-       }
-  
   
   
   }
