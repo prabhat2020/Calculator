@@ -29,7 +29,7 @@ pipeline {
               steps
               {
                 
-                sshagent(['ssh-key']) {
+                sshagent(['prabhat_1121485']) {
     // some block
                        sh "scp -o StrictHostKeyChecking=no Node.yaml prabhat_1121485@13.93.120.161:/home/prabhat_1121485/"
                       script{
