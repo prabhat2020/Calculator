@@ -26,9 +26,11 @@ pipeline {
       }
       
       stage("Deploy on AKS using cluster"){
-    	 def kubeCMD = 'kubectl apply -f Node.yaml -n prabhat'
-    	 sshagent(['prabhat_1121485']){
-    	 sh 'ssh -o StrictHostKeyChecking=no prabhat_1121485@13.93.120.161 ${kubeCMD}'
+              steps { 
+    	            def kubeCMD = 'kubectl apply -f Node.yaml -n prabhat'
+    	            sshagent(['prabhat_1121485']){
+    	            sh 'ssh -o StrictHostKeyChecking=no prabhat_1121485@13.93.120.161 ${kubeCMD}'
+                   }
     	}
     }
   
