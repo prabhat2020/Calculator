@@ -28,11 +28,17 @@ pipeline {
       stage('Deploy Application on K8s') {
               steps
               {
-                sh("curl -LO https://storage.googleapis.com/kubernetes-release/release/\$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl")
-                sh("chmod +x ./kubectl")
+                
                 sshagent(['ssh-key']) {
     // some block
-    sh("cat ./Node.yaml | ./kubectl apply -f -")
+                       sh "scp -o StrictHostKeyChecking=no Node.yaml prabhat_1121485@13.93.120.161:/home/prabhat_1121485/"
+                      script{
+                        try{
+                            sh "prabhat_1121485@13.93.120.161 kubectl apply -f ."
+                        }catch(error){
+                            sh "prabhat_1121485@13.93.120.161 kubectl create -f ."
+                        }
+                    }
 }
                
     }
